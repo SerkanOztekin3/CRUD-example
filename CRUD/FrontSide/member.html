@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="memberApp.js"></script>
+    <title>Document</title>
+    <style>
+        .btn-primary{
+            margin-left:130px;
+        }
+        .control-label{
+            margin-top: 15px;
+        }
+        .form-horizontal{
+
+        }
+        .container{
+            margin-left: 40px;
+        }
+        table.center{
+            margin-left:auto; 
+            margin-right:auto;
+        }
+        legend {
+  color: white;
+  padding: 5px 10px;
+  margin-left: 120px;
+}
+
+        html,
+body {
+	height: 100%;
+}
+
+body {
+	margin: 0;
+	background: linear-gradient(45deg, #49a09d, #5f2c82);
+	font-family: sans-serif;
+	font-weight: 100;
+}
+
+table {
+    position: absolute;
+	top: 25%;
+	left: 47%;
+	transform: translate(-50%, -50%);
+	width: 600px;
+	border-collapse: collapse;
+	overflow: hidden;
+	box-shadow: 0 0 20px rgba(0,0,0,0.1);
+}
+
+th,
+td {
+	padding: 15px;
+	background-color: rgba(255,255,255,0.2);
+	color: #fff;
+}
+
+th {
+	text-align: left;
+}
+
+thead {
+	th {
+		background-color: #55608f;
+	}
+}
+
+tbody {
+	tr {
+		&:hover {
+			background-color: rgba(255,255,255,0.3);
+		}
+	}
+	td {
+		position: relative;
+		&:hover {
+			&:before {
+				content: "";
+				position: absolute;
+				left: 0;
+				right: 0;
+				top: -9999px;
+				bottom: -9999px;
+				background-color: rgba(255,255,255,0.2);
+				z-index: -1;
+			}
+		}
+	}
+ #btn-id{ position: absolute;
+	top: 20%;
+	left: 70%;
+	transform: translate(-50%, -50%);
+ }
+
+ input[type=text]{
+      background-color: rgb(51, 0, 255);
+ }
+ 
+
+    
+    </style>
+</head>
+<body ng-app="myApp" ng-controller="appController">
+  <div class="container" >
+    <form class="form-horizontal" style="margin-top: 50px;" >
+        <fieldset>
+        <legend>LOGİN</legend>
+        <div class="form-group">
+          <label class="col-md-4 control-label">Name</label>  
+          <div class="col-md-4">
+          <input ng-model= "student.name" maxlength="17" type="text" placeholder="Enter a name" class="form-control input-md">
+          </div>
+          <div class="form-group">
+           <label class="col-md-4 control-label" >Surname</label>  
+            <div class="col-md-4">
+            <input ng-model= "student.surname" maxlength="17"  type="text" placeholder="Surname " class="form-control input-md">
+            </div>
+            <div class="form-group">
+                <label class="col-md-4 control-label" >Phone Number</label>  
+                <div class="col-md-4">
+                <input  ng-model= "student.phoneNumber" type="tel"  placeholder="(507) 613 ** **" class="form-control input-md">
+                </div>
+            </div>
+        <div class="form-group">
+          <label class="col-md-4 control-label">Student No</label>
+          <div class="col-md-4">
+            <input  ng-model= "student.studentNumber"  type="number" class="form-control input-md">
+          </div>
+        </div>
+        </fieldset>
+        <input type="button" value="Save" ng-click="saveRecord()" class="btn btn-primary">
+    </form>
+        <div class="container">
+            <table>
+                <thead>
+                    <tr>
+                        <th ng-click='sortColumn("name")'>Name</th>
+                        <th ng-click='sortColumn("surname")'>Surname</th>
+                        <th ng-click='sortColumn("phoneNumber")'>Phone Number</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat='student in students | orderBy:column:reverse | filter : searchtxt'>
+                        <td>{{student.name}}</td>
+                        <td>{{student.surname}}</td>
+                        <td>{{student.phoneNumber}}</td>
+                        <td> 
+                            <input type="button" value="Delete" ng-click="delete(student.id)" class="btn btn-warning">
+                            <input type="button" value="Edit" ng-click="edit(student)" class="btn btn-secondary">
+                        </td>
+                </tbody>
+                <input ng-model="searchtxt.name" type="text" style="width:200px; margin-right:auto; margin-left:680px; border:1px solid #000;" name="sortİnput" placeholder="Flter key">
+            </table>
+        </div>
+</body>
+</html>
