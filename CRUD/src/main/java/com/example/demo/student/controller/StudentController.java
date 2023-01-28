@@ -18,8 +18,7 @@ public class StudentController {
 
     private final StudentService studentService;
 
-    @Autowired //studentService objesini StudentContorller'ın
-    // constructorı içerisine eşliyoruz (Dependency İnjection)
+    @Autowired 
     public StudentController(StudentService studentService) {
         this.studentService = studentService;
     }
